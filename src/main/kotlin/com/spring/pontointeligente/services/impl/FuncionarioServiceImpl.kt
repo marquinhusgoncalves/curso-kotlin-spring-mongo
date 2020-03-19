@@ -3,6 +3,7 @@ package com.spring.pontointeligente.services.impl
 import com.spring.pontointeligente.documents.Funcionario
 import com.spring.pontointeligente.repositories.FuncionarioRepository
 import com.spring.pontointeligente.services.FuncionarioService
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -14,5 +15,5 @@ class FuncionarioServiceImpl(val funcionarioRepository: FuncionarioRepository) :
 
     override fun buscarPorEmail(email: String): Funcionario? = funcionarioRepository.findByEmail(email)
 
-    override fun buscarPorId(id: String): Funcionario? = funcionarioRepository.findById(id)
+    override fun buscarPorId(id: String): Funcionario? = funcionarioRepository.findByIdOrNull(id)
 }
