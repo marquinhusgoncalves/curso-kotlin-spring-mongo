@@ -75,38 +75,37 @@ class LancamentoController (val lancamentoService: LancamentoService, val funcio
         return ResponseEntity.ok(response)
     }
 
-//    @PutMapping
-//    fun atualizar(@PathVariable("id") id: String, @Valid @RequestBody lancamentoDto: LancamentoDto,
-//                  result: BindingResult): ResponseEntity<Response<LancamentoDto>> {
-//        val response: Response<LancamentoDto> = Response<LancamentoDto>()
-//        validarFuncionario(lancamentoDto, result)
-//        lancamentoDto.id = id
-//        val lancamento: Lancamento = converterDtoParaLancamento(lancamentoDto, result)
-//
-//        if (result.hasErrors()){
-//            for (erro in result.allErrors) response.erros.add(erro.defaultMessage!!)
-//            return ResponseEntity.badRequest().body(response)
-//        }
-//
-//        lancamentoService.persistir(lancamento)
-//        response.data = converterLancamentoParaDto(lancamento)
-//        return ResponseEntity.ok(response)
-//    }
+    @PutMapping
+    fun atualizar(@PathVariable("id") id: String, @Valid @RequestBody lancamentoDto: LancamentoDto,
+                  result: BindingResult): ResponseEntity<Response<LancamentoDto>> {
+        val response: Response<LancamentoDto> = Response<LancamentoDto>()
+        validarFuncionario(lancamentoDto, result)
+        lancamentoDto.id = id
+        val lancamento: Lancamento = converterDtoParaLancamento(lancamentoDto, result)
 
-//    @DeleteMapping(value = ["/{id}"])
-//    fun remover(@PathVariable("id") id: String): ResponseEntity<Response<String>> {
-//        val response: Response<String> = Response<String>()
-//        val lancamento: Lancamento? = lancamentoService.buscarPorId(id).orElse(null)
-//
-//        if (lancamento == null) {
-//            response.erros.add("Erro ao remover lançamento. Registro não encontrado para o Id: $id")
-//            return ResponseEntity.badRequest().body(response)
-//        }
-//
-//        lancamentoService.remover(id)
-//        return ResponseEntity.ok(Response<String>())
-//
-//    }
+        if (result.hasErrors()){
+            for (erro in result.allErrors) response.erros.add(erro.defaultMessage!!)
+            return ResponseEntity.badRequest().body(response)
+        }
+
+        lancamentoService.persistir(lancamento)
+        response.data = converterLancamentoParaDto(lancamento)
+        return ResponseEntity.ok(response)
+    }
+
+    @DeleteMapping(value = ["/{id}"])
+    fun remover(@PathVariable("id") id: String): ResponseEntity<Response<String>> {
+        val response: Response<String> = Response<String>()
+        val lancamento: Lancamento? = lancamentoService.buscarPorId(id)
+
+        if (lancamento == null) {
+            response.erros.add("Erro ao remover lançamento. Registro não encontrado para o Id: $id")
+            return ResponseEntity.badRequest().body(response)
+        }
+
+        lancamentoService.remover(id)
+        return ResponseEntity.ok(Response<String>())
+    }
 
     private fun validarFuncionario(lancamentoDto: LancamentoDto, result: BindingResult){
         if(lancamentoDto.funcionarioId == null){
@@ -116,7 +115,7 @@ class LancamentoController (val lancamentoService: LancamentoService, val funcio
 
         val funcionario: Funcionario? = funcionarioService.buscarPorId(lancamentoDto.funcionarioId)
         if(funcionario == null){
-            result.addError(ObjectError("funcionario", "Funcionário não encontrado. Id inexistente."))
+            result.addError(ObjectError("funcionario", "Funcionário não encontrado. ID inexistente."))
         }
     }
 
