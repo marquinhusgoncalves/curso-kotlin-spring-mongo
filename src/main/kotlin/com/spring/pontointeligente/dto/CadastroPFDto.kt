@@ -27,14 +27,10 @@ class CadastroPFDto (
         @get:CNPJ(message = "CNPJ inválido.")
         val cnpj: String = "",
 
-        @get:NotEmpty(message = "Razão Social não pode ser vazio.")
-        @get:Length(min = 5, max = 200, message = "Razão social deve conter entre 5 e 200 caracteres.")
-        val razaoSocial: String = "",
+        val empresa : String? = "",
+        val valorHora : String? = "",
+        val qtdHorasTrabalhoDia : String? = "",
+        val qtdHorasAlmoco : String? = "",
 
-        val empresaId: String? = null,
-
-        val valorHora: String? = null,
-        val qtdHorasTrabalhoDia: String? = null,
-        val qtdHorasAlmoco: String? = null,
-        val id: String? = null
+        val id : String? = null
 )

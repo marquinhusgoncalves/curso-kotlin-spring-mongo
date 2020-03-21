@@ -12,5 +12,5 @@ data class LancamentoDto (
         val descricao: String? = null,
         val localizao: String? = null,
         val funcionarioId: String? = null,
-        val id: String? = null
+        var id: String? = null
 )
